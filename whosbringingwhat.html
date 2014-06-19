@@ -9,16 +9,29 @@
     <h1>Who's bringing wh.at?</h1>
     Organize your potluck or event with no fuss.
     <h2>What do you need?</h2>
-    <ul id="items">
-        <li>
+    <div id='items'>
+        <div class='item-row'>
             <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
-        </li>
-    </ul>
+            <div class="claim-box claimed">Jaime</div><div class="claim-box claimed">Jason</div><div class="claim-box unclaimed"></div>
+        </div>
+        <div class='item-row'>
+            <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
+            <div class="claim-box unclaimed"></div>
+        </div>
+        <div class='item-row'>
+            <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
+            <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed"></div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
     $(".item-entry").labelify();
-    var new_item_entry = "<li><input class='item-entry' type='text' name='item1'></input></li>"
+    var new_item_entry = "\
+        <div class='item-row'>\
+            <input class='item-entry' type='text' name='item1' title='Enter an item'></input>\
+            <div class='unclaimed'></div>\
+        </div>"
     var removal_handler = function(){
         if (
             $(".item-entry:last").is(this)
@@ -32,7 +45,7 @@ $(document).ready(function(){
         }else
         {   
             console.log('you\'re default text so DIE');
-            $(this).closest('li').remove();
+            $(this).closest('.item-row').remove();
         }
     };
     var add_new_item_entry = function(){
