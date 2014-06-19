@@ -1,0 +1,50 @@
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.labelify.js"></script>
+<title>Who's bringing wh.at?</title>
+</head>
+<body>
+    <h1>Who's bringing wh.at?</h1>
+    Organize your potluck or event with no fuss.
+    <h2>What do you need?</h2>
+    <ul id="items">
+        <li>
+            <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
+        </li>
+    </ul>
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".item-entry").labelify();
+    var new_item_entry = "<li><input class='item-entry' type='text' name='item1'></input></li>"
+    var removal_handler = function(){
+        if (
+            $(".item-entry:last").is(this)
+            ){
+            console.log('you\'re last so you can stay');
+            // OK, this can stay
+        }else if (this.value !== $(this).defaultValue)
+               {
+            console.log('I kinda like u');
+            // You entered text; keep it
+        }else
+        {   
+            console.log('you\'re default text so DIE');
+            $(this).closest('li').remove();
+        }
+    };
+    var add_new_item_entry = function(){
+        if ($(".item-entry:last").is(this)){
+            $("#items").append(new_item_entry);
+            $(".item-entry:last")
+              .keydown(add_new_item_entry)
+              .blur(removal_handler);
+        }
+    }
+    
+    $(".item-entry").keydown(add_new_item_entry).blur(removal_handler);
+});
+</script>
+</html>
