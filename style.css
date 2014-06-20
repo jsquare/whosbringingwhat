@@ -1,3 +1,19 @@
 body{
   font-family: verdana, serif;
 }
+
+.claim-box{
+  padding: 10px;
+  display: inline-block;
+  background-color: lightblue;
+  width: 5em;
+  height: 2em;
+  text-align: center;
+  border: 1px solid gray;
+}
+
+.claim-box.unclaimed{
+  border: 1px dashed black;
+  background-color: lightgray;
+  color: gray;
+}

@@ -12,15 +12,15 @@
     <div id='items'>
         <div class='item-row'>
             <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box claimed">Jaime</div><div class="claim-box claimed">Jason</div><div class="claim-box unclaimed"></div>
+            <div class="claim-box claimed">Jaime</div><div class="claim-box claimed">Jason</div><div class="claim-box unclaimed">Claim</div>
         </div>
         <div class='item-row'>
             <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box unclaimed"></div>
+            <div class="claim-box unclaimed">Claim</div>
         </div>
         <div class='item-row'>
-            <input class="item-entry" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed"></div>
+            <input class="item-entry" type="text" name="item1" title="Enter an item">Claim</input>
+            <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed">Claim</div>
         </div>
     </div>
 </body>
@@ -30,7 +30,7 @@ $(document).ready(function(){
     var new_item_entry = "\
         <div class='item-row'>\
             <input class='item-entry' type='text' name='item1' title='Enter an item'></input>\
-            <div class='unclaimed'></div>\
+            <div class='unclaimed'>Claim</div>\
         </div>"
     var removal_handler = function(){
         if (
