@@ -1,30 +1,3 @@
-<html>
-<head>
-<link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="js/lib/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="js/lib/jquery.labelify.js"></script>
-<title>Who's bringing wh.at?</title>
-</head>
-<body>
-    <h1>Who's bringing wh.at?</h1>
-    Organize your potluck or event with no fuss.
-    <h2>What do you need?</h2>
-    <div id='items' class='center'>
-        <div class='item-row'>
-            <input class="item" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box claimed">Jaime</div><div class="claim-box claimed">Jason</div><div class="claim-box unclaimed">Claim</div>
-        </div>
-        <div class='item-row'>
-            <input class="item" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box unclaimed">Claim</div>
-        </div>
-        <div class='item-row'>
-            <input class="item" type="text" name="item1" title="Enter an item"></input>
-            <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed">Claim</div>
-        </div>
-    </div>
-</body>
-<script type="text/javascript">
 $(document).ready(function(){
     $(".item").labelify();
     var new_item = "\
@@ -39,7 +12,7 @@ $(document).ready(function(){
             console.log('Last item gets to stay');
         }else if (this.value !== this.defaultValue) {
             console.log('Entered text gets to stay.');
-        }else {   
+        }else {
             console.log('Default entered text in non-last item DIES');
             $(this).closest('.item-row').remove();
         }
@@ -61,9 +34,7 @@ $(document).ready(function(){
             $(this).removeClass('unclaimed').addClass('claimed current-user-color').text('Me');
         }
     }
-    
+
     $(".item").keydown(add_new_item).blur(removal_handler);
     $(".claim-box").click(claim_item)
 });
-</script>
-</html>
