@@ -1,12 +1,12 @@
 <head>
 <link href="../style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../js/lib/jquery.labelify.js"></script>
 <title>Who's bringing wh.at?</title>
 </head>
 <body>
     <h1>Who's bringing wh.at?</h1>
     Organize your potluck or event with no fuss.
     <h2>What do you need?</h2>
+
     <div id='items' class='center'>
         <div class='item-row'>
             <input class="item" type="text" name="item1" title="Enter an item"/>
@@ -21,4 +21,26 @@
             <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed">Claim</div>
         </div>
     </div>
+    {{> items}}
 </body>
+
+<template name="items">
+  <div id='items' class='center'>
+    {{#each items}}
+      {{> item_row}}
+    {{/each}}
+  </div>
+  <div class="item-row" id="new-item-row">
+    <input type="text" id="new-item" placeholder="New item" />
+  </div>
+</template>
+
+<template name="item_row">
+  <div class="item-row">
+    <input class="item-name-input" id="item-name-input" value="{{name}}" />
+    {{#each claimers}}
+      <div class="claim-box claimed">{{this}}</div>
+    {{/each}}
+    <div class="claim-box unclaimed">+Claim</div>
+  </div>
+</template>
