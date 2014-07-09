@@ -1,5 +1,5 @@
+
 $(document).ready(function(){
-    $(".item").labelify();
     var new_item = "\
         <div class='item-row'>\
             <input class='item' type='text' name='item1' title='Enter an item'></input>\

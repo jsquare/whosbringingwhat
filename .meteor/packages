@@ -5,5 +5,6 @@
 
 standard-app-packages
 autopublish
+backbone
 insecure
 jquery
