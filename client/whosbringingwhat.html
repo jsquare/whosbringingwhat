@@ -21,10 +21,10 @@
             <div class="claim-box claimed">Jason</div><div class="claim-box claimed">Jaime</div><div class="claim-box unclaimed">Claim</div>
         </div>
     </div>
-    {{> items}}
+    {{> items_container}}
 </body>
 
-<template name="items">
+<template name="items_container">
   <div id='items' class='center'>
     {{#each items}}
       {{> item_row}}

@@ -1,5 +1,9 @@
 // Client-side JavaScript, bundled and sent to client.
 
+// Define Minimongo collections to match server/publish.js.
+Lists = new Meteor.Collection("lists");
+Items = new Meteor.Collection("items");
+
 // ID of currently selected list
 Session.setDefault('list_id', null);
 
@@ -10,7 +14,6 @@ var listsHandle = Meteor.subscribe('lists', function () {
     var list = Lists.findOne({}, {sort: {name: 1}});
     if (list) {
       Router.setList(list._id);
-      Session.set('list_id', list._id);
     }
   }
 });
@@ -62,6 +65,10 @@ Deps.autorun(function () {
 //  input.select();
 //};
 
+////////// Lists //////////
+
+// No code here yet
+
 ////////// Items //////////
 
 //Template.items.events(okCancelEvents(
@@ -78,13 +85,13 @@ Deps.autorun(function () {
 //    }
 //  }));
 
-Template.items.items = function () {
+Template.items_container.items = function () {
   // Determine which items to display in main pane,
   // selected based on list_id.
 
   var list_id = Session.get('list_id');
   if (!list_id)
-    return;
+    return; // TODO: pull request
 
   var sel = {list_id: list_id};
 
