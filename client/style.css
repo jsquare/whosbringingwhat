@@ -1,5 +1,5 @@
 body{
-  font-family: verdana, serif;
+  font-family: arial, sans-serif;
 }
 
 .claim-box{
@@ -17,23 +17,43 @@ body{
   color: gray;
 }
 
-.item {
+.item-name {
   padding: 0.5em;
   width: 10em;
-  height: 3em;
+  height: 2em;
   border: none;
   font-size: 1em;
   text-align: right;
   margin: 0.5em;
   margin-right: 1em;
+  padding-right: 1em;
 }
 
 .item-row{
     border-top: 1px solid #ccc;
 }
+.item-row.header{
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
+.item-name.header{
+    font-weight: bold;
+    display: inline-block;
+    height: inherit;
+}
+
+.claim-boxes-title{
+  font-weight: bold;
+  display: inline-block;
+  width: 10em;
+}
 
 .claimers{
     display: inline-block;
+}
+
+.user-summary{
+    float:right;
 }
 
 .current-user-color{

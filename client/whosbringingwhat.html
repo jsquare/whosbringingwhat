@@ -11,23 +11,43 @@
 
 <template name="items_container">
   <div id='items' class='center'>
+    {{> item_row_title }}
     {{#each items}}
       {{> item_row}}
     {{/each}}
-  </div>
-  <div class="item-row" id="new-item-row">
-    <input type="text" id="new-item" placeholder="New item" />
+    <div class="item-row" id="new-item-row">
+      <input type="text" class="item-name" id="new-item" placeholder="Add an item" />
+    </div>
   </div>
 </template>
 
 <template name="item_row">
   <div class="item-row">
-    <input class="item-name-input" id="item-name-input" value="{{name}}" />
+    <input class="item-name" id="item-name-input" value="{{name}}" />
     <div class="claimers">
     {{#each claimers}}
       <div class="claim-box claimed">{{this}}</div>
     {{/each}}
       <div class="claim-box unclaimed">+Claim</div>
     </div>
+  </div>
+</template>
+
+<template name="item_row_title">
+  <div class="item-row header">
+    <div class="item-name header">
+      Wh.at
+    </div>
+    <div class="claimers">
+      <div class="claim-boxes-title">Who's bringing it?</div>
+    </div>
+    {{> user_summary }}
+  </div>
+</template>
+
+<template name="user_summary">
+  <div class="user-summary">
+    You are:
+    <div class="claim-box claimed">Jason</div>
   </div>
 </template>
