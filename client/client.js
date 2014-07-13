@@ -35,35 +35,35 @@ Deps.autorun(function () {
 // "blur" events on a text input (given by selector) and interprets them
 // as "ok" or "cancel".
 
-//var okCancelEvents = function (selector, callbacks) {
-//  var ok = callbacks.ok || function () {};
-//  var cancel = callbacks.cancel || function () {};
-//
-//  var events = {};
-//  events['keyup '+selector+', keydown '+selector+', focusout '+selector] =
-//    function (evt) {
-//      if (evt.type === "keydown" && evt.which === 27) {
-//        // escape = cancel
-//        cancel.call(this, evt);
-//
-//      } else if (evt.type === "keyup" && evt.which === 13 ||
-//                 evt.type === "focusout") {
-//        // blur/return/enter = ok/submit if non-empty
-//        var value = String(evt.target.value || "");
-//        if (value)
-//          ok.call(this, value, evt);
-//        else
-//          cancel.call(this, evt);
-//      }
-//    };
-//
-//  return events;
-//};
-//
-//var activateInput = function (input) {
-//  input.focus();
-//  input.select();
-//};
+var okCancelEvents = function (selector, callbacks) {
+  var ok = callbacks.ok || function () {};
+  var cancel = callbacks.cancel || function () {};
+
+  var events = {};
+  events['keyup '+selector+', keydown '+selector+', focusout '+selector] =
+    function (evt) {
+      if (evt.type === "keydown" && evt.which === 27) {
+        // escape = cancel
+        cancel.call(this, evt);
+
+      } else if (evt.type === "keyup" && evt.which === 13 ||
+                 evt.type === "focusout") {
+        // blur/return/enter = ok/submit if non-empty
+        var value = String(evt.target.value || "");
+        if (value)
+          ok.call(this, value, evt);
+        else
+          cancel.call(this, evt);
+      }
+    };
+
+  return events;
+};
+
+var activateInput = function (input) {
+  input.focus();
+  input.select();
+};
 
 ////////// Lists //////////
 
@@ -71,7 +71,7 @@ Deps.autorun(function () {
 
 ////////// Items //////////
 
-//Template.items.events(okCancelEvents(
+//Template.item_row.events(okCancelEvents(
 //  '#new-item',
 //  {
 //    ok: function (text, evt) {
@@ -84,6 +84,20 @@ Deps.autorun(function () {
 //      evt.target.value = '';
 //    }
 //  }));
+Template.items_container.events(okCancelEvents(
+  '#new-item',
+  {
+    ok: function(text, evt){
+      Items.insert({
+        name: text,
+        claimers: [],
+        timestamp: (new Date()).getTime(),
+        list_id: Session.get('list_id')
+      })
+      evt.target.value = ''
+    }
+  }
+));
 
 Template.items_container.items = function () {
   // Determine which items to display in main pane,
