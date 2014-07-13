@@ -71,7 +71,11 @@ var activateInput = function (input) {
 
 ////////// Items //////////
 
-//Template.item_row.events(okCancelEvents(
+Template.item_row.events({
+  'click .delete': function () {
+    Items.remove(this._id);
+  }
+//okCancelEvents(
 //  '#new-item',
 //  {
 //    ok: function (text, evt) {
@@ -83,7 +87,10 @@ var activateInput = function (input) {
 //      });
 //      evt.target.value = '';
 //    }
-//  }));
+//  }
+//)
+});
+
 Template.items_container.events(okCancelEvents(
   '#new-item',
   {
