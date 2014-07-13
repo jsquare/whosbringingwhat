@@ -22,7 +22,7 @@ var listsHandle = Meteor.subscribe('lists', function () {
 });
 
 var usersHandle = Meteor.subscribe('users');
-var current_user = function () {
+var currentUser = function () {
   return Users.findOne(Session.get('user_id'));
 }
 
@@ -82,7 +82,6 @@ var activateInput = function (input) {
 Template.item_row.events({
   'click .delete': function () {
     if(this.claimers.length){
-      console.log(this.claimers);
       var confirm_message = "This item has been claimed. Are you sure you want to delete it?";
       if(!confirm(confirm_message))
         return;
@@ -90,10 +89,9 @@ Template.item_row.events({
     Items.remove(this._id);
   },
   'click .claim-box.unclaimed': function () {
-    console.log(this.claimers)
     Items.update(this._id,
       {$set: {
-        claimers: this.claimers.concat([current_user().name])
+        claimers: this.claimers.concat([currentUser()])
       }}
     )
   }
@@ -113,9 +111,16 @@ Template.item_row.events({
 //)
 });
 
-Template.item_row.is_this_user = function () {
-  return this == current_user().name;
-};
+Template.item_row.helpers({
+  is_this_user: function () {
+    if(!currentUser())
+      return false
+    return this._id == currentUser()._id;
+  },
+  user_name: function () {
+    return Users.findOne(this._id).name;
+  }
+});
 
 Template.items_container.events(okCancelEvents(
   '#new-item',
@@ -147,8 +152,8 @@ Template.items_container.items = function () {
 
 ////////// User handling //////////
 Template.user_summary.user_name = function() {
-  if(current_user()){
-    return current_user().name
+  if(currentUser()){
+    return currentUser().name
   }
 }
 
@@ -156,10 +161,9 @@ Template.user_summary.events(okCancelEvents(
   '#user-name',
   {
     ok: function(text, evt){
-      console.log(text);
       var text_changed=null;
-      if(text && text != current_user().name){
-        if(!current_user()) {
+      if(text){
+        if(!currentUser()) {
           // User will have to be created
           Session.set(
             'user_id',
@@ -167,16 +171,16 @@ Template.user_summary.events(okCancelEvents(
               name: text
             })
           )
-        } else {
-          // Rename user
+        } else if (text != currentUser().name) {
+          // User exists, but needs a rename
           Users.update(
             Session.get('user_id'),
             {$set: {name: text}}
           )
         }
       }
-      if(current_user()) {
-        evt.target.value = current_user().name
+      if(currentUser()) {
+        evt.target.value = currentUser().name
       }
     }
   }

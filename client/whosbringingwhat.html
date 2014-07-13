@@ -27,7 +27,7 @@
     <div class="claimers">
     {{#each claimers}}
       <div class="claim-box {{#if is_this_user }}current-user-color{{/if}}">
-        {{this}}
+        {{ user_name }}
       </div>
     {{/each}}
       <div class="claim-box unclaimed">+Claim</div>

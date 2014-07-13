@@ -1,12 +1,15 @@
 // if the database is empty on server start, create some sample data.
 Meteor.startup(function () {
   if (Lists.find().count() === 0) {
+    var aaron = Users.findOne(Users.insert({name: 'Aaron'}));
+    var jaime = Users.findOne(Users.insert({name: 'Jaime'}));
+    var jason = Users.findOne(Users.insert({name: 'Jason'}));
     var data = [
       {
-        name: "List 1",
+        name: "Best trip list ever",
         contents: [
-          ["Tent", "Jaime", "Jason"],
-          ["Quadcopter", "Aaron"],
+          ["Tent", jaime, jason],
+          ["Quadcopter", aaron],
           ["Casserole"],
         ]
       }

@@ -7,8 +7,8 @@ Meteor.publish('lists', function () {
 });
 
 // Items -- {name: String,
-//           claimers: [String, ...],
-//           list_id: String,
+//           claimers: [String, ...], // of User IDs
+//           list_id: String, // this is a List ID, of course
 //           timestamp: Number}
 Items = new Meteor.Collection("items");
 
