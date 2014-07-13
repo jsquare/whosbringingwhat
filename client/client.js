@@ -75,7 +75,7 @@ Template.item_row.events({
   'click .delete': function () {
     if(this.claimers.length){
       console.log(this.claimers);
-      var confirm_message="This item has been claimed. Are you sure you want to delete it?";
+      var confirm_message = "This item has been claimed. Are you sure you want to delete it?";
       if(!confirm(confirm_message))
         return;
     }
