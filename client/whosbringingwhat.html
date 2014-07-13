@@ -23,9 +23,11 @@
 <template name="item_row">
   <div class="item-row">
     <input class="item-name-input" id="item-name-input" value="{{name}}" />
+    <div class="claimers">
     {{#each claimers}}
       <div class="claim-box claimed">{{this}}</div>
     {{/each}}
-    <div class="claim-box unclaimed">+Claim</div>
+      <div class="claim-box unclaimed">+Claim</div>
+    </div>
   </div>
 </template>

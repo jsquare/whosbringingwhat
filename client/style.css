@@ -28,6 +28,14 @@ body{
   margin-right: 1em;
 }
 
+.item-row{
+    border-top: 1px solid #ccc;
+}
+
+.claimers{
+    display: inline-block;
+}
+
 .current-user-color{
   background-color: lightgreen;
 }
