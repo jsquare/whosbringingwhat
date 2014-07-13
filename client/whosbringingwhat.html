@@ -26,7 +26,9 @@
     <input class="item-name" id="item-name-input" value="{{name}}" />
     <div class="claimers">
     {{#each claimers}}
-      <div class="claim-box claimed">{{this}}</div>
+      <div class="claim-box {{#if is_this_user }}current-user-color{{/if}}">
+        {{this}}
+      </div>
     {{/each}}
       <div class="claim-box unclaimed">+Claim</div>
     </div>
@@ -49,7 +51,7 @@
   <div class="user-summary">
     You are:
     <input id="user-name" class="claim-box"
-           value="{{user.name}}"
+           value="{{user_name}}"
            placeholder="What's your name?"/>
   </div>
 </template>

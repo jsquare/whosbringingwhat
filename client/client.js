@@ -21,10 +21,10 @@ var listsHandle = Meteor.subscribe('lists', function () {
   }
 });
 
-var current_user = null;
-var usersHandle = Meteor.subscribe('users', function(){
-  current_user=Users.findOne(Session.get('user_id'));
-});
+var usersHandle = Meteor.subscribe('users');
+var current_user = function () {
+  return Users.findOne(Session.get('user_id'));
+}
 
 var itemsHandle = null;
 // Always be subscribed to the items and users for the selected list.
@@ -93,7 +93,7 @@ Template.item_row.events({
     console.log(this.claimers)
     Items.update(this._id,
       {$set: {
-        claimers: this.claimers.concat([current_user.name])
+        claimers: this.claimers.concat([current_user().name])
       }}
     )
   }
@@ -112,6 +112,10 @@ Template.item_row.events({
 //  }
 //)
 });
+
+Template.item_row.is_this_user = function () {
+  return this == current_user().name;
+};
 
 Template.items_container.events(okCancelEvents(
   '#new-item',
@@ -142,8 +146,10 @@ Template.items_container.items = function () {
 };
 
 ////////// User handling //////////
-Template.user_summary.user = function() {
-  return current_user
+Template.user_summary.user_name = function() {
+  if(current_user()){
+    return current_user().name
+  }
 }
 
 Template.user_summary.events(okCancelEvents(
@@ -152,8 +158,8 @@ Template.user_summary.events(okCancelEvents(
     ok: function(text, evt){
       console.log(text);
       var text_changed=null;
-      if(text && text != current_user.name){
-        if(!current_user) {
+      if(text && text != current_user().name){
+        if(!current_user()) {
           // User will have to be created
           Session.set(
             'user_id',
@@ -169,11 +175,8 @@ Template.user_summary.events(okCancelEvents(
           )
         }
       }
-      current_user = Users.findOne(
-        Session.get('user_id')
-      )
-      if(current_user) {
-        evt.target.value = current_user.name
+      if(current_user()) {
+        evt.target.value = current_user().name
       }
     }
   }

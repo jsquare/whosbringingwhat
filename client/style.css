@@ -89,9 +89,6 @@ input#user-name{
 .current-user-color{
   background-color: limegreen;
 }
-.current-user-color:focus{
-  background-color: lightgreen;
-}
 
 .center{
   margin-right: auto;
