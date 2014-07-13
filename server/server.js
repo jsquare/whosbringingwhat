@@ -18,3 +18,11 @@ Meteor.publish('items', function (list_id) {
   return Items.find({list_id: list_id});
 });
 
+
+// Users -- {name: String}
+Users = new Meteor.Collection("users");
+
+// Publish all users, for now
+Meteor.publish('users', function () {
+  return Users.find();
+});

@@ -15,6 +15,12 @@ body{
   border: 1px dashed black;
   background-color: lightgray;
   color: gray;
+  cursor: pointer;
+}
+.claim-box.unclaimed:hover{
+  border: 1px dashed black;
+  background-color: white;
+  color: gray;
 }
 
 .item-name {
@@ -70,11 +76,20 @@ body{
     display: inline-block;
 }
 
+input#user-name{
+  border: none;
+  background-color: mediumspringgreen;
+  width: 10em;
+}
+
 .user-summary{
     float:right;
 }
 
 .current-user-color{
+  background-color: limegreen;
+}
+.current-user-color:focus{
   background-color: lightgreen;
 }
 

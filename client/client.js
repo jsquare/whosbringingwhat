@@ -3,9 +3,12 @@
 // Define Minimongo collections to match server/publish.js.
 Lists = new Meteor.Collection("lists");
 Items = new Meteor.Collection("items");
+Users = new Meteor.Collection("users");
 
 // ID of currently selected list
 Session.setDefault('list_id', null);
+
+Session.setDefault('user_name', null);
 
 // Subscribe to 'lists' collection on startup.
 // Select a list once data has arrived.
@@ -18,8 +21,13 @@ var listsHandle = Meteor.subscribe('lists', function () {
   }
 });
 
+var current_user = null;
+var usersHandle = Meteor.subscribe('users', function(){
+  current_user=Users.findOne(Session.get('user_id'));
+});
+
 var itemsHandle = null;
-// Always be subscribed to the items for the selected list.
+// Always be subscribed to the items and users for the selected list.
 Deps.autorun(function () {
   var list_id = Session.get('list_id');
   if (list_id)
@@ -80,6 +88,14 @@ Template.item_row.events({
         return;
     }
     Items.remove(this._id);
+  },
+  'click .claim-box.unclaimed': function () {
+    console.log(this.claimers)
+    Items.update(this._id,
+      {$set: {
+        claimers: this.claimers.concat([current_user.name])
+      }}
+    )
   }
 //okCancelEvents(
 //  '#new-item',
@@ -124,6 +140,44 @@ Template.items_container.items = function () {
 
   return Items.find(sel, {sort: {timestamp: 1}});
 };
+
+////////// User handling //////////
+Template.user_summary.user = function() {
+  return current_user
+}
+
+Template.user_summary.events(okCancelEvents(
+  '#user-name',
+  {
+    ok: function(text, evt){
+      console.log(text);
+      var text_changed=null;
+      if(text && text != current_user.name){
+        if(!current_user) {
+          // User will have to be created
+          Session.set(
+            'user_id',
+            Users.insert({
+              name: text
+            })
+          )
+        } else {
+          // Rename user
+          Users.update(
+            Session.get('user_id'),
+            {$set: {name: text}}
+          )
+        }
+      }
+      current_user = Users.findOne(
+        Session.get('user_id')
+      )
+      if(current_user) {
+        evt.target.value = current_user.name
+      }
+    }
+  }
+));
 
 ////////// Tracking selected list in URL //////////
 
