@@ -3,12 +3,18 @@ body{
 }
 
 .claim-box{
+  border: 1px solid white;
   padding: 0.5em;
   display: inline-block;
   background-color: lightblue;
   width: 5em;
   text-align: center;
   margin-right: 0.5em;
+}
+/* hover indicates that you can click to un-claim */
+.claim-box.current-user-color:hover{
+  border: 1px dashed black;
+  opacity: .5;
 }
 
 .claim-box.unclaimed{

@@ -98,21 +98,19 @@ Template.item_row.events({
         }}
       )
     }
+  },
+  'click .claim-box.current-user-color': function (event, template) {
+    // Remove this claimer from the item's claimer list
+    var item_id = template.data._id;
+    var item = Items.findOne(item_id);
+    var this_index = $.inArray(this._id, item.claimers);
+    item.claimers.splice(this_index, 1);
+    Items.update(item_id,
+      {$set: {
+        claimers: item.claimers
+      }}
+    )
   }
-//okCancelEvents(
-//  '#new-item',
-//  {
-//    ok: function (text, evt) {
-//      Items.insert({
-//        text: text,
-//        list_id: Session.get('list_id'),
-//        timestamp: (new Date()).getTime(),
-//        claimers: []
-//      });
-//      evt.target.value = '';
-//    }
-//  }
-//)
 });
 
 Template.item_row.helpers({
