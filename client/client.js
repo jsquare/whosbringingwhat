@@ -89,11 +89,15 @@ Template.item_row.events({
     Items.remove(this._id);
   },
   'click .claim-box.unclaimed': function () {
-    Items.update(this._id,
-      {$set: {
-        claimers: this.claimers.concat([currentUser()])
-      }}
-    )
+    if(!currentUser()){
+      alert("You'll have to enter your name before you can claim items.")
+    } else {
+      Items.update(this._id,
+        {$set: {
+          claimers: this.claimers.concat([currentUser()])
+        }}
+      )
+    }
   }
 //okCancelEvents(
 //  '#new-item',
@@ -118,7 +122,9 @@ Template.item_row.helpers({
     return this._id == currentUser()._id;
   },
   user_name: function () {
-    return Users.findOne(this._id).name;
+    if(this._id){
+      return Users.findOne(this._id).name;
+    }
   }
 });
 
