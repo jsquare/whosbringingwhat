@@ -113,6 +113,24 @@ Template.item_row.events({
   }
 });
 
+Template.item_row.events(okCancelEvents(
+  '#item-name-input',
+  {
+    ok: function(text, evt){
+      Items.update(this._id,
+        {$set: {
+          name: text
+        }}
+      )
+      evt.target.blur();
+    },
+    cancel: function(evt){
+      evt.target.value = this.name;
+      evt.target.blur();
+    }
+  }
+));
+
 Template.item_row.helpers({
   is_this_user: function () {
     if(!currentUser())
@@ -186,6 +204,11 @@ Template.user_summary.events(okCancelEvents(
       if(currentUser()) {
         evt.target.value = currentUser().name
       }
+      evt.target.blur();
+    },
+    cancel: function(evt){
+      evt.target.value = currentUser().name;
+      evt.target.blur();
     }
   }
 ));
