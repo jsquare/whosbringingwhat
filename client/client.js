@@ -5,28 +5,17 @@ Lists = new Meteor.Collection("lists");
 Items = new Meteor.Collection("items");
 Users = new Meteor.Collection("users");
 
+Meteor.subscribe('lists');
+Meteor.subscribe('users');
+
 // ID of currently selected list
 Session.setDefault('list_id', null);
 
 Session.setDefault('user_name', null);
 
-// Subscribe to 'lists' collection on startup.
-var listsHandle = Meteor.subscribe('lists');
-
-var usersHandle = Meteor.subscribe('users');
 var currentUser = function () {
   return Users.findOne(Session.get('user_id'));
 }
-
-var itemsHandle = null;
-// Always be subscribed to the items and users for the selected list.
-Deps.autorun(function () {
-  var list_id = Session.get('list_id');
-  if (list_id)
-    itemsHandle = Meteor.subscribe('items', list_id);
-  else
-    itemsHandle = null;
-});
 
 
 ////////// Helpers for in-place editing //////////
@@ -152,15 +141,7 @@ Template.items_container.events(okCancelEvents(
 ));
 
 Template.items_container.items = function () {
-  // Determine which items to display in main pane,
-  // selected based on list_id.
-
-  var list_id = Session.get('list_id');
-  if (!list_id)
-    return; // TODO: pull request
-
-  var sel = {list_id: list_id};
-
+  var sel = {list_id: this._id};
   return Items.find(sel, {sort: {timestamp: 1}});
 };
 
@@ -215,7 +196,7 @@ Router.map(function() {
     path: '/event/:_id',
     data:
       function() {
-        Session.set("list_id", this.params._id);
+        Meteor.subscribe('items', this.params._id);
         return Lists.findOne(this.params._id);
       }
   });
