@@ -2,14 +2,19 @@ body{
   font-family: arial, sans-serif;
 }
 
-.claim-box{
+.button{
+  cursor: pointer;
+}
+.claim-box, .button{
   border: 1px solid white;
   padding: 0.5em;
   display: inline-block;
   background-color: lightblue;
-  width: 5em;
   text-align: center;
   margin-right: 0.5em;
+}
+.claim-box{
+  width: 5em;
 }
 /* hover indicates that you can click to un-claim */
 .claim-box.current-user-color:hover{
@@ -96,8 +101,22 @@ input#user-name{
   background-color: limegreen;
 }
 
-.center{
+.content{
   margin-right: auto;
   margin-left: auto;
   width: 70%;
+}
+
+/* Landing page */
+.landing-content{
+  text-align: center;
+  margin-top: 100px;
+}
+
+.create-event-button{
+  border: 1px solid black;
+  cursor: pointer;
+}
+.create-event-button:hover{
+  background-color: lightcyan;
 }

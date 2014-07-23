@@ -3,12 +3,12 @@
 <title>Who's bringing wh.at?</title>
 </head>
 
-<template name="list">
+<template name="event">
     {{> items_container}}
 </template>
 
 <template name="items_container">
-  <div id='items' class='center'>
+  <div class='content'>
     {{> item_row_title }}
     {{#each items}}
       {{> item_row}}
@@ -25,11 +25,11 @@
     <input class="item-name" id="item-name-input" value="{{name}}" />
     <div class="claimers">
     {{#each claimers}}
-      <div class="claim-box {{#if is_this_user }}current-user-color{{/if}}">
+      <div class="claim-box {{#if is_this_user }}current-user-color button{{/if}}">
         {{ user_name }}
       </div>
     {{/each}}
-      <div class="claim-box unclaimed">+Claim</div>
+      <div class="claim-box unclaimed button">+Claim</div>
     </div>
   </li>
 </template>

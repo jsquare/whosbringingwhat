@@ -56,7 +56,15 @@ var activateInput = function (input) {
 
 ////////// Lists //////////
 
-// No code here yet
+Template.landing.events({
+  'click #create-event': function () {
+    console.log('here I am');
+    var new_list_id = Lists.insert({
+      name: 'My List'
+    });
+    Router.go('event', {_id: new_list_id});
+  }
+});
 
 ////////// Items //////////
 
@@ -192,10 +200,11 @@ Meteor.startup(function () {
 });
 
 Router.map(function() {
-  this.route('list', {
+  this.route('event', {
     path: '/event/:_id',
     data:
       function() {
+        Session.set('list_id', this.params._id)
         Meteor.subscribe('items', this.params._id);
         return Lists.findOne(this.params._id);
       }
