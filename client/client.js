@@ -11,15 +11,7 @@ Session.setDefault('list_id', null);
 Session.setDefault('user_name', null);
 
 // Subscribe to 'lists' collection on startup.
-// Select a list once data has arrived.
-var listsHandle = Meteor.subscribe('lists', function () {
-  if (!Session.get('list_id')) {
-    var list = Lists.findOne({}, {sort: {name: 1}});
-    if (list) {
-      Router.setList(list._id);
-    }
-  }
-});
+var listsHandle = Meteor.subscribe('lists');
 
 var usersHandle = Meteor.subscribe('users');
 var currentUser = function () {
@@ -215,23 +207,19 @@ Template.user_summary.events(okCancelEvents(
 
 ////////// Tracking selected list in URL //////////
 
-var WhosBringingWhatRouter = Backbone.Router.extend({
-  routes: {
-    ":list_id": "main"
-  },
-  main: function (list_id) {
-    var oldList = Session.get("list_id");
-    if (oldList !== list_id) {
-      Session.set("list_id", list_id);
-    }
-  },
-  setList: function (list_id) {
-    this.navigate(list_id, true);
-  }
+Meteor.startup(function () {
 });
 
-Router = new WhosBringingWhatRouter;
-
-Meteor.startup(function () {
-  Backbone.history.start({pushState: true});
+Router.map(function() {
+  this.route('list', {
+    path: '/event/:_id',
+    data:
+      function() {
+        Session.set("list_id", this.params._id);
+        return Lists.findOne(this.params._id);
+      }
+  });
+  this.route('landing', {
+    path: '/'
+  });
 });
