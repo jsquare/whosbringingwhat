@@ -31,7 +31,10 @@
         {{ user_name }}
       </div>
     {{/each}}
-      <div class="claim-box unclaimed button">+Claim</div>
+      <div class="claim-box unclaimed button">
+        <span class="claim-label">+Claim</span>
+        <input class="user-name" style="display: none;" placeholder="Your name"/>
+      </div>
     </div>
   </li>
 </template>

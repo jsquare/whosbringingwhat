@@ -16,6 +16,9 @@ body{
 .claim-box{
   width: 5em;
 }
+.user-name{
+  width: 5em;
+}
 /* hover indicates that you can click to un-claim */
 .claim-box.current-user-color:hover{
   border: 1px dashed black;

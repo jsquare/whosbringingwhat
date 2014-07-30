@@ -67,6 +67,14 @@ Template.landing.events({
 
 ////////// Items //////////
 
+var claim = function(item){
+  Items.update(item._id,
+    {$set: {
+      claimers: item.claimers.concat([currentUser()])
+    }}
+  )
+}
+
 Template.item_row.events({
   'click .delete': function () {
     if(this.claimers.length){
@@ -76,15 +84,13 @@ Template.item_row.events({
     }
     Items.remove(this._id);
   },
-  'click .claim-box.unclaimed': function () {
+  'click .claim-box.unclaimed': function (event) {
     if(!currentUser()){
-      alert("You'll have to enter your name before you can claim items.")
+      var claim_box = $(event.target).closest('.claim-box');
+      claim_box.find('.claim-label').hide();
+      claim_box.find('.user-name').show();
     } else {
-      Items.update(this._id,
-        {$set: {
-          claimers: this.claimers.concat([currentUser()])
-        }}
-      )
+      claim(this);
     }
   },
   'click .claim-box.current-user-color': function (event, template) {
@@ -115,6 +121,29 @@ Template.item_row.events(okCancelEvents(
     cancel: function(evt){
       evt.target.value = this.name;
       evt.target.blur();
+    }
+  }
+));
+
+Template.item_row.events(okCancelEvents(
+  '.user-name',
+  {
+    ok: function(text, event){
+      // This happens because the user is entering their name in order to claim their first item.
+      // Set the user and then claim
+      if(!currentUser()) {
+        create_and_set_user(text);
+        var claim_box = $(event.target).closest('.claim-box');
+        claim_box.find('.claim-label').show();
+        claim_box.find('.user-name').hide();
+
+        claim(this);
+      };
+    },
+    cancel: function(event){
+      var claim_box = $(event.target).closest('.claim-box');
+      claim_box.find('.claim-label').show();
+      claim_box.find('.user-name').hide();
     }
   }
 ));
@@ -159,6 +188,15 @@ Template.user_summary.user_name = function() {
   }
 }
 
+var create_and_set_user = function(name){
+  Session.set(
+    'user_id',
+    Users.insert({
+      name: name
+    })
+  )
+};
+
 Template.user_summary.events(okCancelEvents(
   '#user-name',
   {
@@ -167,12 +205,7 @@ Template.user_summary.events(okCancelEvents(
       if(text){
         if(!currentUser()) {
           // User will have to be created
-          Session.set(
-            'user_id',
-            Users.insert({
-              name: text
-            })
-          )
+          create_and_set_user(text);
         } else if (text != currentUser().name) {
           // User exists, but needs a rename
           Users.update(
