@@ -58,7 +58,6 @@ var activateInput = function (input) {
 
 Template.landing.events({
   'click #create-event': function () {
-    console.log('here I am');
     var new_list_id = Lists.insert({
       name: 'My List'
     });
