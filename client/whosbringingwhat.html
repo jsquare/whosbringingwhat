@@ -1,5 +1,7 @@
 <head>
 <link href="../style.css" rel="stylesheet" type="text/css">
+<link href='http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css' rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../barometer.js"></script>
 <title>Who's bringing wh.at?</title>
 </head>
 
@@ -16,6 +18,21 @@
     <div class="item-row" id="new-item-row">
       <input type="text" class="item-name" id="new-item" placeholder="Add an item" />
     </div>
+  </div>
+  {{> feedback }}
+</template>
+
+<template name="feedback">
+  <a id="barometer_tab" onclick="$('#barometer_overlay').show()" href="#">Feedback</a>
+  <div id="barometer_overlay" style="display: none;">
+    <div id="barometer_main" style="top: 130.95px;">
+      <a id="barometer_close" onclick="$('#barometer_overlay').hide()" href="#"></a>
+      <div id="overlay_header">
+        <a href="http://getbarometer.com">Powered by barometer</a>
+      </div>
+      <iframe src="http://getbarometer.com/system/feedback_form/hdcXzLh6qfCGyH8KDgyZy" id="barometer_iframe" allowTransparency="true" scrolling="no" frameborder="0" class="loading"></iframe>
+    </div>
+    <div id="barometer_screen" onclick="$('#barometer_overlay').hide()" style="height: 100%;"></div>
   </div>
 </template>
 
