@@ -6,7 +6,7 @@ body{
   cursor: pointer;
 }
 .claim-box, .button{
-  border: 1px solid white;
+  border: 1px solid transparent;
   padding: 0.5em;
   display: inline-block;
   background-color: lightblue;
@@ -44,6 +44,7 @@ body{
   margin: 0.5em;
   margin-right: 1em;
   padding-right: 1em;
+  background-color: transparent;
 }
 
 .item-row{
